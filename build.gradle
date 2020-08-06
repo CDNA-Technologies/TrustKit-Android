@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.7.5"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -26,8 +26,8 @@ allprojects {
 
 
 ext{
-    trustkitVersionCode = 8
-    trustkitVersionName = "1.1.2"
+    trustkitVersionCode = 1
+    trustkitVersionName = "1.0.0"
 
     demoAppTrustKitVersionCode = 2
     demoAppTrustKitVersionName = "1.1"
@@ -60,5 +60,14 @@ ext{
                 'playServicesBase': '11.0.0',
         ]
     ]
+    sdkPackageName = "com.nuclei.sdk"
 
+    artifactory_repo_key = 'libs-release-local'
+    def apikeyPropertiesFile = rootProject.file("apikey.properties")
+    def apikeyProperties = new Properties()
+    apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+    artifactory_contextUrl = apikeyProperties['BASE_ARTIFACTORY_URL']
+    artifactory_user = apikeyProperties['PROD_SDK_USER_NAME']
+    artifactory_password = apikeyProperties['PROD_SDK_PWD']
 }

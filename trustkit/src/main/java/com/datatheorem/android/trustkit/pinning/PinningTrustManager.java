@@ -120,7 +120,14 @@ class PinningTrustManager implements X509TrustManager {
 
         // Before Android N, manually perform pinning validation on the verified chain if path
         // validation succeeded. On Android N this was already taken care of by the netsec policy
-        if ((Build.VERSION.SDK_INT < 24) && (!didChainValidationFail)) {
+
+        /**
+         * Commenting this if condition so as to allow the Trustkit to use
+         * the SSL Pins provided outside the network_security_config.xml in devices with
+         * API level 24 and above too.
+         * if ((Build.VERSION.SDK_INT < 24) && (!didChainValidationFail)) {
+         */
+//        if ((Build.VERSION.SDK_INT < 24) && (!didChainValidationFail)) {
 
             boolean hasPinningPolicyExpired = (serverConfig.getExpirationDate() != null)
                     && (serverConfig.getExpirationDate().compareTo(new Date()) < 0);
@@ -130,7 +137,7 @@ class PinningTrustManager implements X509TrustManager {
                 didPinningValidationFail = !isPinInChain(validatedServerChain,
                         serverConfig.getPublicKeyPins());
             }
-        }
+//        }
 
         // Send a pinning failure report if needed
         if (didChainValidationFail || didPinningValidationFail) {
