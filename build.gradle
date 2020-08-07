@@ -60,7 +60,7 @@ ext{
                 'playServicesBase': '11.0.0',
         ]
     ]
-    sdkPackageName = "com.nuclei.sdk"
+    sdkPackageName = "com.nuclei.support"
 
     artifactory_repo_key = 'libs-release-local'
     def apikeyPropertiesFile = rootProject.file("apikey.properties")
